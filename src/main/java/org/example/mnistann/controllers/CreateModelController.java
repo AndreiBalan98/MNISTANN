@@ -54,7 +54,7 @@ public class CreateModelController {
     @FXML
     protected void onBackClick() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("application-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/fxml/application-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 400, 300);
             Stage currentStage = (Stage) inputSizeField.getScene().getWindow();
             currentStage.setScene(scene);

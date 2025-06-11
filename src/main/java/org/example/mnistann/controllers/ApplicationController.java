@@ -20,12 +20,12 @@ public class ApplicationController {
 
     @FXML
     protected void onCreateModelClick() {
-        loadScene("create-model-view.fxml");
+        loadScene("/org/example/fxml/create-model-view.fxml");
     }
 
     @FXML
     protected void onTestModelClick() {
-        loadScene("test-model-view.fxml");
+        loadScene("/org/example/fxml/test-model-view.fxml");
     }
 
     private void loadScene(String fxmlFile) {
