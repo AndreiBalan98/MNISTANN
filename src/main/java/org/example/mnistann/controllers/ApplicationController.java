@@ -31,7 +31,7 @@ public class ApplicationController {
     private void loadScene(String fxmlFile) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
-            Scene newScene = new Scene(fxmlLoader.load(), 600, 700);
+            Scene newScene = new Scene(fxmlLoader.load(), 600, 900);
 
             // Obține stage-ul curent din orice nod din scena actuală
             Stage currentStage = (Stage) mainContainer.getScene().getWindow();

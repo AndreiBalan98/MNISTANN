@@ -21,7 +21,7 @@ public class TestModelController {
     protected void onBackClick() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/fxml/application-view.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 500, 600);
+            Scene scene = new Scene(fxmlLoader.load(), 400, 300);
             Stage currentStage = (Stage) statusLabel.getScene().getWindow();
             currentStage.setScene(scene);
         } catch (IOException e) {

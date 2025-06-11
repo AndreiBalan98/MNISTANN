@@ -5,8 +5,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.example.mnistann.neuralnetwork.DigitsNN;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class CreateModelController {
     @FXML private TextField inputSizeField;
@@ -19,10 +21,11 @@ public class CreateModelController {
     @FXML private TextField trainSizeField;
     @FXML private TextField testSizeField;
     @FXML private TextField batchSizeField;
+    @FXML private TextArea consoleArea;
 
     private int inputSize;
     private int numberOfHiddenLayers;
-    private String hiddenLayersSizes;
+    private int[] hiddenLayersSizes;
     private int outputSize;
     private boolean initializeWithZero;
     private int epochs;
@@ -36,7 +39,14 @@ public class CreateModelController {
         try {
             inputSize = Integer.parseInt(inputSizeField.getText());
             numberOfHiddenLayers = Integer.parseInt(hiddenLayersField.getText());
-            hiddenLayersSizes = hiddenSizesField.getText();
+
+            // Parse hidden layers sizes from comma-separated string
+            String[] sizesStr = hiddenSizesField.getText().split(",");
+            hiddenLayersSizes = new int[sizesStr.length];
+            for (int i = 0; i < sizesStr.length; i++) {
+                hiddenLayersSizes[i] = Integer.parseInt(sizesStr[i].trim());
+            }
+
             outputSize = Integer.parseInt(outputSizeField.getText());
             initializeWithZero = initZeroCheck.isSelected();
             epochs = Integer.parseInt(epochsField.getText());
@@ -45,10 +55,27 @@ public class CreateModelController {
             testSize = Integer.parseInt(testSizeField.getText());
             batchSize = Integer.parseInt(batchSizeField.getText());
 
-            System.out.println("Configuration saved successfully!");
+            // Display configuration in console
+            consoleArea.appendText("Configuration saved successfully!\n");
+            consoleArea.appendText("Input size: " + inputSize + "\n");
+            consoleArea.appendText("Hidden layers: " + Arrays.toString(hiddenLayersSizes) + "\n");
+            consoleArea.appendText("Output size: " + outputSize + "\n");
+            consoleArea.appendText("Learning rate: " + learningRate + "\n");
+            consoleArea.appendText("Epochs: " + epochs + "\n");
+            consoleArea.appendText("Batch size: " + batchSize + "\n");
+            consoleArea.appendText("------------------------\n");
+
         } catch (NumberFormatException ex) {
-            System.out.println("Error: Invalid number format");
+            consoleArea.appendText("Error: Invalid number format\n");
         }
+    }
+
+    @FXML
+    protected void onStartTrainingClick() throws IOException {
+        consoleArea.appendText("Training started...\n");
+        
+        DigitsNN model = new DigitsNN(inputSize, numberOfHiddenLayers, hiddenLayersSizes, outputSize, initializeWithZero);
+        model.train(epochs, learningRate, trainSize, testSize, batchSize);
     }
 
     @FXML
@@ -59,7 +86,7 @@ public class CreateModelController {
             Stage currentStage = (Stage) inputSizeField.getScene().getWindow();
             currentStage.setScene(scene);
         } catch (IOException e) {
-            System.out.println("Error loading main view: " + e.getMessage());
+            consoleArea.appendText("Error loading main view: " + e.getMessage() + "\n");
         }
     }
 }

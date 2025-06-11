@@ -16,7 +16,7 @@
     <Label text="Model Architecture:" style="-fx-font-weight: bold;"/>
     <TextField fx:id="inputSizeField" promptText="Input size" prefWidth="250.0"/>
     <TextField fx:id="hiddenLayersField" promptText="Number of hidden layers" prefWidth="250.0"/>
-    <TextField fx:id="hiddenSizesField" promptText="Hidden layers sizes (comma separated)" prefWidth="250.0"/>
+    <TextField fx:id="hiddenSizesField" promptText="Hidden layers sizes (e.g., 64,32,16)" prefWidth="250.0"/>
     <TextField fx:id="outputSizeField" promptText="Output size" prefWidth="250.0"/>
     <CheckBox fx:id="initZeroCheck" text="Initialize with zero"/>
 
@@ -33,6 +33,13 @@
             <Insets top="20.0"/>
         </padding>
         <Button text="Save Configuration" onAction="#onSaveClick" prefWidth="200.0" prefHeight="35.0"/>
+        <Button text="Start Training" onAction="#onStartTrainingClick" prefWidth="200.0" prefHeight="35.0"/>
+
+        <Label text="Training Console:" style="-fx-font-weight: bold; -fx-padding: 10 0 5 0;"/>
+        <TextArea fx:id="consoleArea" prefWidth="300.0" prefHeight="150.0"
+                  editable="false" wrapText="true"
+                  style="-fx-font-family: 'Courier New'; -fx-font-size: 12px; -fx-background-color: #f0f0f0;"/>
+
         <Button text="Back" onAction="#onBackClick" prefWidth="200.0" prefHeight="35.0"/>
     </VBox>
 </VBox>
