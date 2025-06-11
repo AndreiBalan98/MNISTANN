@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <VBox fx:id="mainContainer" alignment="CENTER" spacing="30.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.example.mnistann.ApplicationController">
+      fx:controller="org.example.mnistann.controllers.ApplicationController">
     <padding>
         <Insets bottom="40.0" left="40.0" right="40.0" top="40.0"/>
     </padding>

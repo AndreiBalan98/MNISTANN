@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <VBox alignment="CENTER" spacing="15.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.example.mnistann.CreateModelController">
+      fx:controller="org.example.mnistann.controllers.CreateModelController">
     <padding>
         <Insets bottom="30.0" left="40.0" right="40.0" top="30.0"/>
     </padding>

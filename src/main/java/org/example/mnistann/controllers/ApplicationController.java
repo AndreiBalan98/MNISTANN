@@ -1,4 +1,4 @@
-package org.example.mnistann;
+package org.example.mnistann.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
