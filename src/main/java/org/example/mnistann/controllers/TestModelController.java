@@ -19,55 +19,39 @@ import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.image.WritableImage;
 import javafx.scene.image.PixelReader;
-import java.awt.image.BufferedImage;
 
 import java.io.IOException;
 
 public class TestModelController {
-    @FXML
-    private Label statusLabel;
-
+    // UI elements for selecting model
+    @FXML private VBox modelSelectionSection;
     @FXML private ComboBox<String> modelsComboBox;
+    @FXML private Label statusLabel;
     @FXML private Button loadModelButton;
-    private DigitsNN loadedModel;
 
     // UI elements for testing
-    @FXML private VBox modelSelectionSection;
     @FXML private HBox testingSection;
     @FXML private Canvas drawingCanvas;
-    @FXML private Button eraseButton;
-
-    // Prediction labels
     @FXML private Label prediction0, prediction1, prediction2, prediction3, prediction4;
     @FXML private Label prediction5, prediction6, prediction7, prediction8, prediction9;
-    private Label[] predictionLabels;
+    @FXML private Button eraseButton;
+    @FXML private Button backButton;
 
-    // Drawing variables
+    // Variables
     private GraphicsContext gc;
+    private Label[] predictionLabels;
     private boolean isDrawing = false;
+    private DigitsNN loadedModel;
 
     @FXML
     protected void initialize() {
         statusLabel.setText("Select a model to load");
         populateModelsComboBox();
 
-        // Initialize prediction labels array
         predictionLabels = new Label[]{
                 prediction0, prediction1, prediction2, prediction3, prediction4,
                 prediction5, prediction6, prediction7, prediction8, prediction9
         };
-    }
-
-    @FXML
-    protected void onBackClick() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/fxml/application-view.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 400, 300);
-            Stage currentStage = (Stage) statusLabel.getScene().getWindow();
-            currentStage.setScene(scene);
-        } catch (IOException e) {
-            System.out.println("Error loading main view: " + e.getMessage());
-        }
     }
 
     @FXML
@@ -83,16 +67,16 @@ public class TestModelController {
             ObjectMapper mapper = new ObjectMapper();
             Map<String, Object> modelData = mapper.readValue(modelFile, Map.class);
 
-            // Extrage configurația
+            // Extract configuration
             int inputSize = (Integer) modelData.get("inputSize");
             int numberOfHiddenLayers = (Integer) modelData.get("numberOfHiddenLayers");
             int[] hiddenLayersSize = mapper.convertValue(modelData.get("hiddenLayersSize"), int[].class);
             int outputSize = (Integer) modelData.get("outputSize");
 
-            // Creează noul model
+            // Create new model
             loadedModel = new DigitsNN(inputSize, numberOfHiddenLayers, hiddenLayersSize, outputSize, false);
 
-            // Încarcă weights și biases
+            // Load weights and biases
             double[][][] weights = mapper.convertValue(modelData.get("weights"), double[][][].class);
             double[][] biases = mapper.convertValue(modelData.get("biases"), double[][].class);
 
@@ -103,6 +87,7 @@ public class TestModelController {
             modelSelectionSection.setVisible(false);
             testingSection.setVisible(true);
             eraseButton.setVisible(true);
+            backButton.setVisible(true);
 
             // Initialize canvas
             setupCanvas();
@@ -110,6 +95,31 @@ public class TestModelController {
         } catch (Exception e) {
             statusLabel.setText("Error loading model: " + e.getMessage());
             loadedModel = null;
+        }
+    }
+
+    @FXML
+    protected void onEraseClick() {
+        gc.setFill(Color.WHITE);
+        gc.fillRect(0, 0, 280, 280);
+
+        // Reset predictions in original order
+        for (int i = 0; i < 10; i++) {
+            predictionLabels[i].setText(i + ": 0.00%");
+            predictionLabels[i].setTextFill(Color.BLACK);
+            predictionLabels[i].setStyle("-fx-font-size: 14px;");
+        }
+    }
+
+    @FXML
+    protected void onBackClick() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/fxml/application-view.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 400, 300);
+            Stage currentStage = (Stage) statusLabel.getScene().getWindow();
+            currentStage.setScene(scene);
+        } catch (IOException e) {
+            System.out.println("Error loading main view: " + e.getMessage());
         }
     }
 
@@ -162,20 +172,8 @@ public class TestModelController {
     private void stopDrawing(MouseEvent e) {
         if (isDrawing) {
             isDrawing = false;
-            // Predict when user stops drawing
-            predictDigit();
-        }
-    }
 
-    @FXML
-    protected void onEraseClick() {
-        gc.setFill(Color.WHITE);
-        gc.fillRect(0, 0, 280, 280);
-        // Reset predictions in original order
-        for (int i = 0; i < 10; i++) {
-            predictionLabels[i].setText(i + ": 0.00%");
-            predictionLabels[i].setTextFill(Color.BLACK);
-            predictionLabels[i].setStyle("-fx-font-size: 14px;");
+            predictDigit();
         }
     }
 

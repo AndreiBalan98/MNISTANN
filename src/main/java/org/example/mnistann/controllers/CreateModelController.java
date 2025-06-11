@@ -9,7 +9,6 @@ import javafx.stage.Stage;
 import org.example.mnistann.neuralnetwork.DigitsNN;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -48,7 +47,7 @@ public class CreateModelController {
             inputSize = Integer.parseInt(inputSizeField.getText());
             numberOfHiddenLayers = Integer.parseInt(hiddenLayersField.getText());
 
-            // Parse hidden layers sizes from comma-separated string
+            // Split hidden layer sizes
             String[] sizesStr = hiddenSizesField.getText().split(",");
             hiddenLayersSizes = new int[sizesStr.length];
             for (int i = 0; i < sizesStr.length; i++) {
@@ -117,30 +116,27 @@ public class CreateModelController {
             ObjectMapper mapper = new ObjectMapper();
             Map<String, Object> modelData = new HashMap<>();
 
-            // Salvează configurația modelului
+            // Save model configuration
             modelData.put("inputSize", model.getInputSize());
             modelData.put("numberOfHiddenLayers", model.getNumberOfHiddenLayers());
             modelData.put("hiddenLayersSize", model.getHiddenLayersSize());
             modelData.put("outputSize", model.getOutputSize());
 
-            // Salvează greutățile și biasurile
+            // Save weights and biases
             modelData.put("weights", model.getWeights());
             modelData.put("biases", model.getBiases());
 
-            // Salvează parametrii de antrenament
+            // Save training parameters
             modelData.put("epochs", epochs);
             modelData.put("learningRate", learningRate);
             modelData.put("trainSize", trainSize);
             modelData.put("testSize", testSize);
             modelData.put("batchSize", batchSize);
 
-            // Creează directorul models dacă nu există
+            // Create models directory
             File modelsDir = new File("src/main/resources/models");
-            if (!modelsDir.exists()) {
-                modelsDir.mkdirs();
-            }
 
-            // Salvează în fișier
+            // Save model to .json
             File outputFile = new File(modelsDir, filename);
             mapper.writeValue(outputFile, modelData);
 

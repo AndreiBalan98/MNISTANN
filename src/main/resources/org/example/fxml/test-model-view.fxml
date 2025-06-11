@@ -7,7 +7,6 @@
 
 <VBox xmlns:fx="http://javafx.com/fxml" fx:controller="org.example.mnistann.controllers.TestModelController">
 
-    <!-- Model Selection Section (hidden after load) -->
     <VBox fx:id="modelSelectionSection" alignment="CENTER" spacing="20.0">
         <padding>
             <Insets bottom="20.0" left="40.0" right="40.0" top="40.0"/>
@@ -15,22 +14,20 @@
         <Label text="Select Model to Test" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
         <ComboBox fx:id="modelsComboBox" prefWidth="300"/>
         <Button fx:id="loadModelButton" text="Load Selected Model" onAction="#onLoadModelClick"/>
+        <Button text="Back" onAction="#onBackClick"/>
         <Label fx:id="statusLabel" style="-fx-font-size: 16px;"/>
     </VBox>
 
-    <!-- Testing Section (shown after model load) -->
     <HBox fx:id="testingSection" visible="false" spacing="20.0">
         <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
         </padding>
 
-        <!-- Left side - Drawing Canvas -->
         <VBox alignment="CENTER" spacing="10.0">
             <Label text="Draw a digit (0-9)" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
             <Canvas fx:id="drawingCanvas" width="280" height="280" style="-fx-border-color: black; -fx-border-width: 2;"/>
         </VBox>
 
-        <!-- Right side - Predictions -->
         <VBox spacing="10.0" prefWidth="200">
             <Label text="Predictions:" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
             <Label fx:id="prediction0" text="0: 0.00%" style="-fx-font-size: 14px;"/>
@@ -46,13 +43,12 @@
         </VBox>
     </HBox>
 
-    <!-- Buttons at bottom -->
     <HBox alignment="CENTER" spacing="20.0">
         <padding>
             <Insets top="10.0" bottom="20.0"/>
         </padding>
         <Button fx:id="eraseButton" text="Erase" onAction="#onEraseClick" visible="false"/>
-        <Button text="Back" onAction="#onBackClick"/>
+        <Button fx:id="backButton" text="Back" onAction="#onBackClick" visible="false"/>
     </HBox>
 
 </VBox>
