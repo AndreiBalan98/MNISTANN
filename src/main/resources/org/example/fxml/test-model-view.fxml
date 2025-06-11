@@ -14,11 +14,10 @@
         <Label text="Select Model to Test" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
         <ComboBox fx:id="modelsComboBox" prefWidth="300"/>
         <Button fx:id="loadModelButton" text="Load Selected Model" onAction="#onLoadModelClick"/>
-        <Button text="Back" onAction="#onBackClick"/>
         <Label fx:id="statusLabel" style="-fx-font-size: 16px;"/>
     </VBox>
 
-    <HBox fx:id="testingSection" visible="false" spacing="20.0">
+    <HBox fx:id="testingSection" visible="true" spacing="20.0">
         <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
         </padding>
@@ -47,8 +46,8 @@
         <padding>
             <Insets top="10.0" bottom="20.0"/>
         </padding>
-        <Button fx:id="eraseButton" text="Erase" onAction="#onEraseClick" visible="false"/>
-        <Button fx:id="backButton" text="Back" onAction="#onBackClick" visible="false"/>
+        <Button fx:id="eraseButton" text="Erase" onAction="#onEraseClick" visible="true"/>
+        <Button fx:id="backButton" text="Back" onAction="#onBackClick" visible="true"/>
     </HBox>
 
 </VBox>

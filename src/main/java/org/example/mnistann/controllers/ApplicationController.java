@@ -20,18 +20,28 @@ public class ApplicationController {
 
     @FXML
     protected void onCreateModelClick() {
-        loadScene("/org/example/fxml/create-model-view.fxml");
+        loadScene("/org/example/fxml/create-model-view.fxml", "Create");
     }
 
     @FXML
     protected void onTestModelClick() {
-        loadScene("/org/example/fxml/test-model-view.fxml");
+        loadScene("/org/example/fxml/test-model-view.fxml", "Test");
     }
 
-    private void loadScene(String fxmlFile) {
+    private void loadScene(String fxmlFile, String nextScene) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
-            Scene newScene = new Scene(fxmlLoader.load(), 600, 900);
+            Scene newScene = null;
+
+            if (nextScene.equals("Create")) {
+                newScene = new Scene(fxmlLoader.load(), 600, 900);
+            }
+            else if (nextScene.equals("Test")) {
+                newScene = new Scene(fxmlLoader.load(), 600, 700);
+            }
+            else {
+                newScene = new Scene(fxmlLoader.load(), 600, 900);
+            }
 
             Stage currentStage = (Stage) mainContainer.getScene().getWindow();
             currentStage.setScene(newScene);

@@ -62,6 +62,8 @@ public class TestModelController {
             return;
         }
 
+        statusLabel.setText("Model " + selectedModel + " loaded");
+
         try {
             File modelFile = new File("src/main/resources/models", selectedModel);
             ObjectMapper mapper = new ObjectMapper();
@@ -84,7 +86,7 @@ public class TestModelController {
             loadedModel.setBiases(biases);
 
             // Switch to testing interface
-            modelSelectionSection.setVisible(false);
+            modelSelectionSection.setVisible(true);
             testingSection.setVisible(true);
             eraseButton.setVisible(true);
             backButton.setVisible(true);
