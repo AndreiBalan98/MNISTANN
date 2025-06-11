@@ -7,6 +7,7 @@ module org.example.mnistann {
     requires org.kordamp.bootstrapfx.core;
     requires deeplearning4j.datasets;
     requires nd4j.api;
+    requires com.fasterxml.jackson.databind;
 
     opens org.example.mnistann to javafx.fxml;
     exports org.example.mnistann;

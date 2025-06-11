@@ -7,6 +7,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.example.mnistann.neuralnetwork.DigitsNN;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -79,6 +86,14 @@ public class CreateModelController {
             try {
                 DigitsNN model = new DigitsNN(inputSize, numberOfHiddenLayers, hiddenLayersSizes, outputSize, initializeWithZero);
                 model.train(epochs, learningRate, trainSize, testSize, batchSize, consoleArea);
+
+                String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
+                String filename = "model_" + timestamp + ".json";
+
+                saveModelToJson(model, filename);
+
+                Platform.runLater(() -> consoleArea.appendText("Training completed and model saved!\n"));
+
             } catch (IOException e) {
                 Platform.runLater(() -> consoleArea.appendText("Error: " + e.getMessage() + "\n"));
             }
@@ -94,6 +109,45 @@ public class CreateModelController {
             currentStage.setScene(scene);
         } catch (IOException e) {
             consoleArea.appendText("Error loading main view: " + e.getMessage() + "\n");
+        }
+    }
+
+    private void saveModelToJson(DigitsNN model, String filename) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            Map<String, Object> modelData = new HashMap<>();
+
+            // Salvează configurația modelului
+            modelData.put("inputSize", model.getInputSize());
+            modelData.put("numberOfHiddenLayers", model.getNumberOfHiddenLayers());
+            modelData.put("hiddenLayersSize", model.getHiddenLayersSize());
+            modelData.put("outputSize", model.getOutputSize());
+
+            // Salvează greutățile și biasurile
+            modelData.put("weights", model.getWeights());
+            modelData.put("biases", model.getBiases());
+
+            // Salvează parametrii de antrenament
+            modelData.put("epochs", epochs);
+            modelData.put("learningRate", learningRate);
+            modelData.put("trainSize", trainSize);
+            modelData.put("testSize", testSize);
+            modelData.put("batchSize", batchSize);
+
+            // Creează directorul models dacă nu există
+            File modelsDir = new File("src/main/resources/models");
+            if (!modelsDir.exists()) {
+                modelsDir.mkdirs();
+            }
+
+            // Salvează în fișier
+            File outputFile = new File(modelsDir, filename);
+            mapper.writeValue(outputFile, modelData);
+
+            Platform.runLater(() -> consoleArea.appendText("Model saved to: " + outputFile.getAbsolutePath() + "\n"));
+
+        } catch (IOException e) {
+            Platform.runLater(() -> consoleArea.appendText("Error saving model: " + e.getMessage() + "\n"));
         }
     }
 }
