@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" spacing="15.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.mnistann.CreateModelController">
+    <padding>
+        <Insets bottom="30.0" left="40.0" right="40.0" top="30.0"/>
+    </padding>
+
+    <Label text="Create Model Configuration" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+    <Separator prefWidth="300.0"/>
+
+    <Label text="Model Architecture:" style="-fx-font-weight: bold;"/>
+    <TextField fx:id="inputSizeField" promptText="Input size" prefWidth="250.0"/>
+    <TextField fx:id="hiddenLayersField" promptText="Number of hidden layers" prefWidth="250.0"/>
+    <TextField fx:id="hiddenSizesField" promptText="Hidden layers sizes (comma separated)" prefWidth="250.0"/>
+    <TextField fx:id="outputSizeField" promptText="Output size" prefWidth="250.0"/>
+    <CheckBox fx:id="initZeroCheck" text="Initialize with zero"/>
+
+    <Separator prefWidth="300.0"/>
+    <Label text="Training Parameters:" style="-fx-font-weight: bold;"/>
+    <TextField fx:id="epochsField" promptText="Epochs" prefWidth="250.0"/>
+    <TextField fx:id="learningRateField" promptText="Learning rate" prefWidth="250.0"/>
+    <TextField fx:id="trainSizeField" promptText="Train size" prefWidth="250.0"/>
+    <TextField fx:id="testSizeField" promptText="Test size" prefWidth="250.0"/>
+    <TextField fx:id="batchSizeField" promptText="Batch size" prefWidth="250.0"/>
+
+    <VBox alignment="CENTER" spacing="10.0">
+        <padding>
+            <Insets top="20.0"/>
+        </padding>
+        <Button text="Save Configuration" onAction="#onSaveClick" prefWidth="200.0" prefHeight="35.0"/>
+        <Button text="Back" onAction="#onBackClick" prefWidth="200.0" prefHeight="35.0"/>
+    </VBox>
+</VBox>
