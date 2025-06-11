@@ -162,6 +162,14 @@ public abstract class ForwardNeuralNetwork {
         return biases;
     }
 
+    public void setWeights(double[][][] weights) {
+        this.weights = weights;
+    }
+
+    public void setBiases(double[][] biases) {
+        this.biases = biases;
+    }
+
     public Function<Double, Double>[] getActivationFunctions() {
         return activationFunctions;
     }
