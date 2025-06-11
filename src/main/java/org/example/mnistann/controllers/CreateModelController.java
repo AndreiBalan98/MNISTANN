@@ -1,5 +1,6 @@
 package org.example.mnistann.controllers;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -73,9 +74,15 @@ public class CreateModelController {
     @FXML
     protected void onStartTrainingClick() throws IOException {
         consoleArea.appendText("Training started...\n");
-        
-        DigitsNN model = new DigitsNN(inputSize, numberOfHiddenLayers, hiddenLayersSizes, outputSize, initializeWithZero);
-        model.train(epochs, learningRate, trainSize, testSize, batchSize);
+
+        new Thread(() -> {
+            try {
+                DigitsNN model = new DigitsNN(inputSize, numberOfHiddenLayers, hiddenLayersSizes, outputSize, initializeWithZero);
+                model.train(epochs, learningRate, trainSize, testSize, batchSize, consoleArea);
+            } catch (IOException e) {
+                Platform.runLater(() -> consoleArea.appendText("Error: " + e.getMessage() + "\n"));
+            }
+        }).start();
     }
 
     @FXML

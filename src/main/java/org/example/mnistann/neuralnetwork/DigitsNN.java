@@ -1,5 +1,7 @@
 package org.example.mnistann.neuralnetwork;
 
+import javafx.application.Platform;
+import javafx.scene.control.TextArea;
 import org.deeplearning4j.datasets.iterator.impl.MnistDataSetIterator;
 import org.nd4j.linalg.api.ndarray.INDArray;
 import org.nd4j.linalg.dataset.api.DataSet;
@@ -50,6 +52,46 @@ public class DigitsNN extends ForwardNeuralNetwork {
 
         double testAccuracy = computeAccuracy(mnistTest, testSize);
         System.out.println("Test Accuracy: " + testAccuracy);
+    }
+
+    public void train(int epochs, double learningRate, int trainSize, int testSize, int batchSize, TextArea consoleArea) throws IOException {
+
+        DataSetIterator mnistTrain = new MnistDataSetIterator(1, true, 12345);
+        DataSetIterator mnistTest = new MnistDataSetIterator(1, false, 12345);
+
+        int trainCount;
+
+        for (int epoch = 0; epoch < epochs; epoch++) {
+            trainCount = 0;
+
+            while (trainCount < trainSize) {
+                DataSet batch = mnistTrain.next();
+                INDArray features = batch.getFeatures();
+                INDArray labels = batch.getLabels();
+
+                double[] input = features.reshape(28 * 28).toDoubleVector();
+                double[] expectedOutput = new double[getOutputSize()];
+                expectedOutput[labels.argMax(1).getInt(0)] = 1.0;
+
+                backpropagation(input, expectedOutput, learningRate);
+
+                if ((trainCount + 1) % batchSize == 0) {
+                    double trainAccuracy = computeAccuracy(new MnistDataSetIterator(1, true, 12345), trainSize);
+                    System.out.println("Epoch " + (epoch + 1) + " - Batch " + (trainCount + 1) + " - Train Accuracy: " + trainAccuracy);
+                    int finalEpoch = epoch;
+                    int finalTrainCount = trainCount;
+                    Platform.runLater(() -> consoleArea.appendText("Epoch " + (finalEpoch + 1) + " - Batch " + (finalTrainCount + 1) + " - Train Accuracy: " + trainAccuracy + "\n"));
+                }
+
+                trainCount++;
+            }
+
+            mnistTrain.reset();
+        }
+
+        double testAccuracy = computeAccuracy(mnistTest, testSize);
+        System.out.println("Test Accuracy: " + testAccuracy);
+        Platform.runLater(() -> consoleArea.appendText("Test Accuracy: " + testAccuracy + "\n"));
     }
 
     private double computeAccuracy(DataSetIterator dataSetIterator, int dataSize) throws IOException {
