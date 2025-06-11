@@ -8,6 +8,7 @@ module org.example.mnistann {
     requires deeplearning4j.datasets;
     requires nd4j.api;
     requires com.fasterxml.jackson.databind;
+    requires java.desktop;
 
     opens org.example.mnistann to javafx.fxml;
     exports org.example.mnistann;
