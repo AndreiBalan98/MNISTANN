@@ -20,22 +20,13 @@
     <TextField fx:id="outputSizeField" promptText="Output size" prefWidth="250.0"/>
     <CheckBox fx:id="initZeroCheck" text="Initialize with zero"/>
 
-    <Separator prefWidth="300.0"/>
-    <Label text="Training Parameters:" style="-fx-font-weight: bold;"/>
-    <TextField fx:id="epochsField" promptText="Epochs" prefWidth="250.0"/>
-    <TextField fx:id="learningRateField" promptText="Learning rate" prefWidth="250.0"/>
-    <TextField fx:id="trainSizeField" promptText="Train size" prefWidth="250.0"/>
-    <TextField fx:id="testSizeField" promptText="Test size" prefWidth="250.0"/>
-    <TextField fx:id="batchSizeField" promptText="Batch size" prefWidth="250.0"/>
-
     <VBox alignment="CENTER" spacing="10.0">
         <padding>
             <Insets top="20.0"/>
         </padding>
         <Button text="Save Configuration" onAction="#onSaveClick" prefWidth="200.0" prefHeight="35.0"/>
-        <Button text="Start Training" onAction="#onStartTrainingClick" prefWidth="200.0" prefHeight="35.0"/>
 
-        <Label text="Training Console:" style="-fx-font-weight: bold; -fx-padding: 10 0 5 0;"/>
+        <Label text="Console:" style="-fx-font-weight: bold; -fx-padding: 10 0 5 0;"/>
         <TextArea fx:id="consoleArea" prefWidth="300.0" prefHeight="150.0"
                   editable="false" wrapText="true"
                   style="-fx-font-family: 'Courier New'; -fx-font-size: 12px; -fx-background-color: #f0f0f0;"/>

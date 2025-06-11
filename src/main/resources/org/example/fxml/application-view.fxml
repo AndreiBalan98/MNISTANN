@@ -17,6 +17,9 @@
         <Button fx:id="createModelButton" text="Create model"
                 prefWidth="150.0" prefHeight="40.0"
                 onAction="#onCreateModelClick"/>
+        <Button fx:id="trainModelButton" text="Train model"
+                prefWidth="150.0" prefHeight="40.0"
+                onAction="#onTrainModelClick"/>
         <Button fx:id="testModelButton" text="Test model"
                 prefWidth="150.0" prefHeight="40.0"
                 onAction="#onTestModelClick"/>

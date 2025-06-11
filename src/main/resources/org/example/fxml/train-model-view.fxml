@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" spacing="15.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.mnistann.controllers.TrainModelController">
+    <padding>
+        <Insets bottom="30.0" left="40.0" right="40.0" top="30.0"/>
+    </padding>
+
+    <Label text="Train Model" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+    <Separator prefWidth="300.0"/>
+    <VBox fx:id="modelSelectionSection" alignment="CENTER" spacing="20.0">
+        <padding>
+            <Insets bottom="20.0" left="40.0" right="40.0" top="20.0"/>
+        </padding>
+        <Label text="Select Model to Train:" style="-fx-font-weight: bold;"/>
+        <ComboBox fx:id="modelsComboBox" prefWidth="300"/>
+        <Button fx:id="loadModelButton" text="Load Selected Model" onAction="#onLoadModelClick"/>
+        <Label fx:id="statusLabel" style="-fx-font-size: 16px;"/>
+    </VBox>
+
+    <Separator prefWidth="300.0"/>
+    <Label text="Training Parameters:" style="-fx-font-weight: bold;"/>
+    <TextField fx:id="epochsField" promptText="Epochs" prefWidth="250.0"/>
+    <TextField fx:id="learningRateField" promptText="Learning rate" prefWidth="250.0"/>
+    <TextField fx:id="trainSizeField" promptText="Train size" prefWidth="250.0"/>
+    <TextField fx:id="testSizeField" promptText="Test size" prefWidth="250.0"/>
+    <TextField fx:id="batchSizeField" promptText="Batch size" prefWidth="250.0"/>
+
+    <VBox alignment="CENTER" spacing="10.0">
+        <padding>
+            <Insets top="20.0"/>
+        </padding>
+        <Button text="Start Training" onAction="#onStartTrainingClick" prefWidth="200.0" prefHeight="35.0"/>
+
+        <Label text="Training Console:" style="-fx-font-weight: bold; -fx-padding: 10 0 5 0;"/>
+        <TextArea fx:id="consoleArea" prefWidth="300.0" prefHeight="150.0"
+                  editable="false" wrapText="true"
+                  style="-fx-font-family: 'Courier New'; -fx-font-size: 12px; -fx-background-color: #f0f0f0;"/>
+
+        <Button text="Back" onAction="#onBackClick" prefWidth="200.0" prefHeight="35.0"/>
+    </VBox>
+</VBox>
