@@ -17,7 +17,7 @@
         <Label fx:id="statusLabel" style="-fx-font-size: 16px;"/>
     </VBox>
 
-    <HBox fx:id="testingSection" visible="true" spacing="20.0">
+    <HBox fx:id="testingSection" spacing="20.0">
         <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
         </padding>
@@ -46,8 +46,8 @@
         <padding>
             <Insets top="10.0" bottom="20.0"/>
         </padding>
-        <Button fx:id="eraseButton" text="Erase" onAction="#onEraseClick" visible="true"/>
-        <Button fx:id="backButton" text="Back" onAction="#onBackClick" visible="true"/>
+        <Button fx:id="eraseButton" text="Erase" onAction="#onEraseClick"/>
+        <Button fx:id="backButton" text="Back" onAction="#onBackClick"/>
     </HBox>
 
 </VBox>

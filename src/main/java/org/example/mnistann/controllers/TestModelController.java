@@ -85,12 +85,6 @@ public class TestModelController {
             loadedModel.setWeights(weights);
             loadedModel.setBiases(biases);
 
-            // Switch to testing interface
-            modelSelectionSection.setVisible(true);
-            testingSection.setVisible(true);
-            eraseButton.setVisible(true);
-            backButton.setVisible(true);
-
             // Initialize canvas
             setupCanvas();
 
